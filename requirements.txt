@@ -1,0 +1,12 @@
+# LongCat-Image dependencies
+# Based on https://github.com/meituan-longcat/LongCat-Image
+
+# Core dependencies
+accelerate>=1.11.0
+diffusers>=0.35.2
+transformers>=4.57.1
+safetensors>=0.6.2
+peft>=0.18.0
+
+# The actual LongCat-Image package needs to be installed from the repo
+# Install with: pip install git+https://github.com/meituan-longcat/LongCat-Image.git

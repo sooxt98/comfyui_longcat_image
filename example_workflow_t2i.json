@@ -1,0 +1,92 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LongCatImageModelLoader",
+      "pos": [50, 50],
+      "size": [300, 150],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "longcat_pipeline",
+          "type": "LONGCAT_PIPE",
+          "links": [1],
+          "shape": 3
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "LongCat-Image",
+        "bfloat16"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "LongCatImageTextToImage",
+      "pos": [400, 50],
+      "size": [350, 450],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "longcat_pipeline",
+          "type": "LONGCAT_PIPE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [2],
+          "shape": 3
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "A young Asian woman wearing a yellow knit sweater with a white necklace. Her hands are resting on her knees with a serene expression. The background is a rough brick wall with warm afternoon sunlight creating a peaceful and warm atmosphere.",
+        "",
+        1344,
+        768,
+        50,
+        4.5,
+        43,
+        "true",
+        "true"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "SaveImage",
+      "pos": [800, 50],
+      "size": [300, 400],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "LONGCAT_PIPE"],
+    [2, 2, 0, 3, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
