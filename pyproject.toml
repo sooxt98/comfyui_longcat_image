@@ -1,0 +1,37 @@
+[project]
+name = "longcat_image"
+description = "ComfyUI integration of the LongCat-Image pipeline for text-to-image generation and image editing with excellent Chinese text rendering capabilities. (Description by CC)"
+version = "1.0.0"
+license = {file = "LICENSE"} 
+# classifiers = [
+#     # For OS-independent nodes (works on all operating systems)
+#     "Operating System :: OS Independent",
+#
+#     # OR for OS-specific nodes, specify the supported systems:
+#     "Operating System :: Microsoft :: Windows",  # Windows specific
+#     "Operating System :: POSIX :: Linux",  # Linux specific
+#     "Operating System :: MacOS",  # macOS specific
+#
+#     # GPU Accelerator support. Pick the ones that are supported by your extension.
+#     "Environment :: GPU :: NVIDIA CUDA",    # NVIDIA CUDA support
+#     "Environment :: GPU :: AMD ROCm",       # AMD ROCm support
+#     "Environment :: GPU :: Intel Arc",      # Intel Arc support
+#     "Environment :: NPU :: Huawei Ascend",  # Huawei Ascend support
+#     "Environment :: GPU :: Apple Metal",    # Apple Metal support
+# ]
+
+dependencies = ["# LongCat-Image dependencies", "# Based on https://github.com/meituan-longcat/LongCat-Image", "# Core dependencies", "accelerate>=1.11.0", "diffusers>=0.35.2", "transformers>=4.57.1", "safetensors>=0.6.2", "peft>=0.18.0", "# The actual LongCat-Image package needs to be installed from the repo", "# Install with: pip install git+https://github.com/meituan-longcat/LongCat-Image.git"]
+
+[project.urls]
+Repository = "https://github.com/sooxt98/comfyui_longcat_image"
+#  Used by Comfy Registry https://registry.comfy.org
+Documentation = "https://github.com/sooxt98/comfyui_longcat_image/wiki"
+"Bug Tracker" = "https://github.com/sooxt98/comfyui_longcat_image/issues"
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "comfyui_longcat_image"
+Icon = ""
+includes = [] 
+# "requires-comfyui" = ">=1.0.0"  # ComfyUI version compatibility
+
