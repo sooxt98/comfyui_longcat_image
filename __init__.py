@@ -42,6 +42,12 @@ class LongCatImageModelLoader(io.ComfyNode):
                     default="bfloat16",
                     tooltip="Data type for model weights"
                 ),
+                io.Combo.Input(
+                    "enable_cpu_offload",
+                    options=["false", "true"],
+                    default="false",
+                    tooltip="Enable CPU offload to save VRAM (~17-19GB required). Slower but prevents OOM on low VRAM GPUs."
+                ),
             ],
             outputs=[
                 LongCatPipe.Output(
@@ -52,7 +58,7 @@ class LongCatImageModelLoader(io.ComfyNode):
         )
 
     @classmethod
-    def execute(cls, model_path, dtype) -> io.NodeOutput:
+    def execute(cls, model_path, dtype, enable_cpu_offload) -> io.NodeOutput:
         try:
             from transformers import AutoProcessor
             from longcat_image.models import LongCatImageTransformer2DModel
@@ -133,7 +139,14 @@ class LongCatImageModelLoader(io.ComfyNode):
                 text_processor=text_processor,
             )
         
-        pipe.to(device, torch_dtype)
+        # Apply CPU offload or move to device based on user preference
+        cpu_offload = enable_cpu_offload == "true"
+        if cpu_offload:
+            # Enable CPU offload to save VRAM (Required ~17-19 GB); slower but prevents OOM
+            pipe.enable_model_cpu_offload()
+        else:
+            # Load all models to GPU at once (Faster inference but requires more VRAM)
+            pipe.to(device, torch_dtype)
 
         pipeline_data = {
             "pipe": pipe,

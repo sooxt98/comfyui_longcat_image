@@ -50,9 +50,28 @@ Loads a LongCat-Image model for use with other nodes.
 **Inputs:**
 - `model_path`: Path to the model directory (e.g., "LongCat-Image" or "LongCat-Image-Edit")
 - `dtype`: Data type for model weights (bfloat16, float16, float32)
+- `enable_cpu_offload`: Enable CPU offload to save VRAM (false/true, default: false)
 
 **Outputs:**
 - `LONGCAT_PIPE`: Pipeline object for use with generation nodes
+
+#### Low VRAM Support
+
+The model loader supports low VRAM mode via the `enable_cpu_offload` option:
+
+- **Disabled (default)**: All models loaded to GPU at once
+  - Faster inference
+  - Requires more VRAM (typically 24GB+)
+  
+- **Enabled**: Models offloaded to CPU when not in use
+  - Slower inference (due to model transfers)
+  - Requires only ~17-19GB VRAM
+  - Prevents Out-of-Memory errors on lower-end GPUs
+
+**When to use CPU offload:**
+- GPUs with less than 24GB VRAM
+- When experiencing OOM errors
+- When running multiple models simultaneously
 
 ### LongCat-Image Text to Image
 
@@ -137,6 +156,15 @@ You can load these workflows in ComfyUI by dragging and dropping the JSON file o
 - **Supported Resolutions**: 768x1344 and variations
 - **Chinese Text Support**: Industry-leading Chinese dictionary coverage
 - **Quality**: Competitive with much larger models
+
+### VRAM Requirements
+
+| Mode | VRAM Required | Speed | When to Use |
+|------|---------------|-------|-------------|
+| Standard (CPU offload disabled) | ~24GB+ | Faster | High-end GPUs (e.g., RTX 3090, 4090, A100) |
+| Low VRAM (CPU offload enabled) | ~17-19GB | Slower | Mid-range GPUs (e.g., RTX 3080, 4080) |
+
+**Note**: The Low VRAM mode uses CPU offloading to transfer models between CPU and GPU as needed, reducing VRAM usage at the cost of slower inference speed.
 
 ## Tips
 
