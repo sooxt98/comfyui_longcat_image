@@ -61,7 +61,7 @@ The model loader supports low VRAM mode via the `enable_cpu_offload` option:
 
 - **Disabled (default)**: All models loaded to GPU at once
   - Faster inference
-  - Requires more VRAM (typically 24GB+)
+  - Requires more VRAM (typically ~24GB+)
   
 - **Enabled**: Models offloaded to CPU when not in use
   - Slower inference (due to model transfers)

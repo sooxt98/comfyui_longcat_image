@@ -142,7 +142,7 @@ class LongCatImageModelLoader(io.ComfyNode):
         # Apply CPU offload or move to device based on user preference
         cpu_offload = enable_cpu_offload == "true"
         if cpu_offload:
-            # Enable CPU offload to save VRAM (Required ~17-19 GB); slower but prevents OOM
+            # Enable CPU offload to save VRAM (Requires ~17-19 GB); slower but prevents OOM
             pipe.enable_model_cpu_offload()
         else:
             # Load all models to GPU at once (Faster inference but requires more VRAM)
