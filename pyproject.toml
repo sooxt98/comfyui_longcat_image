@@ -29,7 +29,7 @@ Documentation = "https://github.com/sooxt98/comfyui_longcat_image/wiki"
 "Bug Tracker" = "https://github.com/sooxt98/comfyui_longcat_image/issues"
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "sooxt98"
 DisplayName = "comfyui_longcat_image"
 Icon = ""
 includes = [] 
