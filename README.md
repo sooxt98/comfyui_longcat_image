@@ -18,13 +18,7 @@ cd custom_nodes/comfyui_longcat_image
 pip install -r requirements.txt
 ```
 
-### 2. Install LongCat-Image Package
-
-```bash
-pip install git+https://github.com/meituan-longcat/LongCat-Image.git
-```
-
-### 3. (Optional) Install SageAttention for Speed Boost
+### 2. (Optional) Install SageAttention for Speed Boost
 
 For ~2x faster inference, install SageAttention and enable sage at attention_backend option in model loader node:
 
@@ -34,7 +28,7 @@ pip install sageattention
 
 **Requirements:** CUDA-capable NVIDIA GPU with PyTorch CUDA support.
 
-### 4. Download Models
+### 3. Download Models
 
 Download the models using huggingface-cli:
 
