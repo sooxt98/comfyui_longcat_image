@@ -26,7 +26,7 @@ pip install git+https://github.com/meituan-longcat/LongCat-Image.git
 
 ### 3. (Optional) Install SageAttention for Speed Boost
 
-For ~2x faster inference, install SageAttention:
+For ~2x faster inference, install SageAttention and enable sage at attention_backend option in model loader node:
 
 ```bash
 pip install sageattention
