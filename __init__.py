@@ -48,6 +48,12 @@ class LongCatImageModelLoader(io.ComfyNode):
                     default="true",
                     tooltip="Enable CPU offload to save VRAM (~17-19GB required). Slower but prevents OOM on low VRAM GPUs."
                 ),
+                io.Combo.Input(
+                    "attention_backend",
+                    options=["default", "sage"],
+                    default="default",
+                    tooltip="Choose attention backend. 'sage' uses SageAttention (requires CUDA and the sageattention package)."
+                ),
             ],
             outputs=[
                 LongCatPipe.Output(
@@ -58,7 +64,7 @@ class LongCatImageModelLoader(io.ComfyNode):
         )
 
     @classmethod
-    def execute(cls, model_path, dtype, enable_cpu_offload) -> io.NodeOutput:
+    def execute(cls, model_path, dtype, enable_cpu_offload, attention_backend) -> io.NodeOutput:
         try:
             from transformers import AutoProcessor
             from longcat_image.models import LongCatImageTransformer2DModel
@@ -107,6 +113,38 @@ class LongCatImageModelLoader(io.ComfyNode):
         torch_dtype = dtype_map[dtype]
 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+        # Optional SageAttention backend
+        if attention_backend == "sage":
+            if device.type != "cuda":
+                raise ValueError("SageAttention requires a CUDA-capable GPU.")
+            try:
+                import torch.nn.functional as F
+                from sageattention import sageattn
+            except ImportError as e:
+                raise ImportError(
+                    "SageAttention selected but the package is not installed. "
+                    "Install it with: pip install sageattention"
+                ) from e
+            # Replace PyTorch SDPA with SageAttention globally, but fall back to
+            # the original implementation when a head_dim is unsupported or a
+            # mask/dropout is requested.
+            if not getattr(F.scaled_dot_product_attention, "_longcat_sage_wrapped", False):
+                orig_sdpa = F.scaled_dot_product_attention
+
+                def _longcat_sage_sdpa(query, key, value, attn_mask=None, dropout_p=0.0, is_causal=False, scale=None, **kwargs):
+                    # SageAttention currently supports limited head dimensions (typically <=256).
+                    head_dim = query.shape[-1]
+                    if attn_mask is not None or dropout_p not in (0, 0.0) or head_dim > 256:
+                        return orig_sdpa(query, key, value, attn_mask=attn_mask, dropout_p=dropout_p, is_causal=is_causal, scale=scale, **kwargs)
+                    try:
+                        return sageattn(query, key, value, tensor_layout="HND", is_causal=is_causal, sm_scale=scale)
+                    except Exception:
+                        # Fallback for any unsupported shapes/dtypes
+                        return orig_sdpa(query, key, value, attn_mask=attn_mask, dropout_p=dropout_p, is_causal=is_causal, scale=scale, **kwargs)
+
+                _longcat_sage_sdpa._longcat_sage_wrapped = True
+                F.scaled_dot_product_attention = _longcat_sage_sdpa
 
         # Load text processor
         text_processor = AutoProcessor.from_pretrained(
