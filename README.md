@@ -95,7 +95,7 @@ The model loader supports an optional SageAttention backend for improved inferen
 - **sage**: Uses [SageAttention](https://github.com/thu-ml/SageAttention) for accelerated attention computation
   - **~2x faster inference speed** compared to default attention
   - Requires CUDA-capable GPU
-  - Requires the `sageattention` package (see installation instructions below)
+  - Requires the `sageattention` package (see installation section above)
   - Automatically falls back to default attention for unsupported operations
 
 **To use SageAttention:**
@@ -111,8 +111,6 @@ pip install sageattention
 - CUDA-capable NVIDIA GPU
 - PyTorch with CUDA support
 - The `sageattention` package installed
-
-**Note:** SageAttention provides significant speed improvements for attention operations while maintaining output quality. It automatically falls back to standard attention for edge cases (e.g., when using attention masks or unsupported head dimensions).
 
 ### LongCat-Image Text to Image
 
