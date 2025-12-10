@@ -13,7 +13,7 @@ This custom node integrates the [LongCat-Image](https://github.com/meituan-longc
 
 ### 1. Install Node
 
-Search for `comfyui_longcat_image` in comfyui nodes manager / install missing node directly at the workflow provided
+Search for `comfyui_longcat_image` in comfyui custom nodes manager / install missing node directly at the workflow provided
 
 Or you could install manually with this command
 
