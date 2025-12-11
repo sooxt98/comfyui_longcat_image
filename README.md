@@ -37,16 +37,16 @@ pip install sageattention
 Download the models using huggingface-cli:
 
 ```bash
-pip install "huggingface_hub[cli]"
+pip install -U huggingface_hub
 
 # For text-to-image
-huggingface-cli download meituan-longcat/LongCat-Image --local-dir models/diffusion_models/LongCat-Image
+hf download meituan-longcat/LongCat-Image --local-dir models/diffusion_models/LongCat-Image
 
 # For image editing
-huggingface-cli download meituan-longcat/LongCat-Image-Edit --local-dir models/diffusion_models/LongCat-Image-Edit
+hf download meituan-longcat/LongCat-Image-Edit --local-dir models/diffusion_models/LongCat-Image-Edit
 
 # For fine-tuning (optional)
-huggingface-cli download meituan-longcat/LongCat-Image-Dev --local-dir models/diffusion_models/LongCat-Image-Dev
+hf download meituan-longcat/LongCat-Image-Dev --local-dir models/diffusion_models/LongCat-Image-Dev
 ```
 
 ## Available Nodes
