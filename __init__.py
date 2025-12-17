@@ -67,8 +67,8 @@ class LongCatImageModelLoader(io.ComfyNode):
     def execute(cls, model_path, dtype, enable_cpu_offload, attention_backend) -> io.NodeOutput:
         try:
             from transformers import AutoProcessor
-            from longcat_image.models import LongCatImageTransformer2DModel
-            from longcat_image.pipelines import LongCatImagePipeline, LongCatImageEditPipeline
+            from diffusers.models.transformers.transformer_longcat_image import LongCatImageTransformer2DModel
+            from diffusers import LongCatImagePipeline, LongCatImageEditPipeline
         except ImportError as e:
             raise ImportError(
                 f"Failed to import LongCat-Image dependencies. "
