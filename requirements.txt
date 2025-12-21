@@ -9,4 +9,4 @@ safetensors>=0.6.2
 peft>=0.18.0
 
 # The actual LongCat-Image package needs to be installed from the repo
-longcat-image @ git+https://github.com/meituan-longcat/LongCat-Image.git@main
+# longcat-image @ git+https://github.com/meituan-longcat/LongCat-Image.git@main
